@@ -19,5 +19,7 @@ let words = ['coding blast', 'coding', 'blast'];
 let source = Observable.from(words);
 
 let observer = new SimpleObserver();
-
 source.subscribe(observer);
+
+let observer2 = new SimpleObserver();
+source.subscribe(observer2);

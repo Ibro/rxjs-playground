@@ -1,0 +1,38 @@
+{
+  "name": "rxjs-playground",
+  "version": "1.0.0",
+  "description": "TypeScript in browser - Simple example",
+  "main": "main.js",
+  "dependencies": {
+    "rxjs": "^5.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-latest": "^6.24.0",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.2.1",
+    "webpack": "^2.3.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --watch --inline --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ibro/rxjs-playground.git"
+  },
+  "keywords": [
+    "rxjs",
+    "reactivex",
+    "observable",
+    "observer"
+  ],
+  "author": "Ibro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ibro/rxjs-playground/issues"
+  },
+  "homepage": "https://github.com/Ibro/rxjs-playground#readme"
+}

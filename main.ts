@@ -1,25 +1,18 @@
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 
-class SimpleObserver implements Observer<string> {
-    next(value: string) {
-        console.log('next: ', value);
-    }
 
-    error(err: any) {
-        console.log('error: ', err);
-    }
+let source = Observable.fromEvent(document, 'mousemove');
 
-    complete() {
-        console.log('complete');
-    }
+source.subscribe(next, error, complete);
+
+function next(value: any) {
+    console.log('next: ', value);
 }
 
-let words = ['coding blast', 'coding', 'blast'];
+function error(err: any) {
+    console.log('error: ', err);
+}
 
-let source = Observable.from(words);
-
-let observer = new SimpleObserver();
-source.subscribe(observer);
-
-let observer2 = new SimpleObserver();
-source.subscribe(observer2);
+function complete() {
+    console.log('complete');
+}

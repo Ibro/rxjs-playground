@@ -1,18 +1,16 @@
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 
-let words = ['coding blast', 'badword', 'coding', 'blast'];
+let numbers = [1, 2, 3];
 
-let source = Observable.create(function observerFunction(observer: Observer<string>) {
-    for (let word of words) {
-        observer.next(word);
-    }
+let source = Observable
+    .from(numbers)
+    .map(n => n * 2)
+    .filter(n => n > 5);
 
-    observer.complete();
-});
 
 source.subscribe(next, error, complete);
 
-function next(value: any) {
+function next(value: number) {
     console.log('next: ', value);
 }
 
@@ -23,3 +21,5 @@ function error(err: any) {
 function complete() {
     console.log('complete');
 }
+
+

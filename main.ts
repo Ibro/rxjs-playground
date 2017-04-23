@@ -2,7 +2,7 @@ import {Observable } from 'rxjs';
 
 let words = ['coding blast', 'badword', 'coding', 'blast'];
 
-let source = Observable.onErrorResumeNext(Observable.create(observer =>{
+let source = Observable.create(observer =>{
     for (let word of words) {
         if (word === 'badword') {
             observer.error('Bad word!');
@@ -12,10 +12,15 @@ let source = Observable.onErrorResumeNext(Observable.create(observer =>{
     }
 
     observer.complete();
-}));
+});
 
-source.subscribe(next);
+source.subscribe(next, error);
 
 function next(value: any) {
     console.log('next: ', value);
 }
+
+function error(err) {
+    console.log('error: ', err);
+}
+

@@ -1,26 +1,45 @@
-import {Observable } from 'rxjs';
+import {Observable} from "rxjs";
 
-let words = ['coding blast', 'badword', 'coding', 'blast'];
+const apiEndpoint = 'https://jsonplaceholder.typicode.com/posts';
 
-let source = Observable.create(observer =>{
-    for (let word of words) {
-        if (word === 'badword') {
-            observer.error('Bad word!');
-        }
+let divPosts = document.getElementById('posts');
+let btnGetPosts = document.getElementById('btnGetPosts');
 
-        observer.next(word);
-    }
+let click = Observable.fromEvent(btnGetPosts, "click");
 
-    observer.complete();
-});
 
-source.subscribe(next, error);
-
-function next(value: any) {
-    console.log('next: ', value);
+function renderPosts(posts) {
+    posts.forEach(function (post) {
+        let divPost = document.createElement('div');
+        divPost.innerText = `id: ${post.id}, title: ${post.title}`;
+        divPosts.appendChild(divPost);
+    })
 }
 
-function error(err) {
+let source = click
+    .flatMap(e => fetchData(apiEndpoint))
+    .take(5);
+
+
+let subscribtion = source.subscribe(next, error, complete);
+
+function next(posts: any) {
+    console.log(posts);
+    renderPosts(posts);
+}
+
+function error(err: any) {
     console.log('error: ', err);
+}
+
+function complete() {
+    console.log('complete');
+}
+
+export function fetchData(url: string) {
+    return Observable
+        .fromPromise(
+            fetch(url).then(r => r.json())
+        );
 }
 

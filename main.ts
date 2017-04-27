@@ -1,19 +1,18 @@
 import {Observable} from 'rxjs';
 
-let numbers = [1, 2, 3, 4];
+let btnFun = document.getElementById('btnFun');
+let divMain = document.getElementById('divMain');
 
-let source = Observable
-    .from(numbers)
-    .map(n => n * 2)
-    .filter(n => n > 5)
-    .reduce((accumulator, currentValue) => accumulator + currentValue);
+let clicksSource = Observable.fromEvent(btnFun, 'click');
+
+clicksSource
+    .scan((s) => <number>s + 1, 0)
+    .forEach(number => addStuffToHtml(number));
 
 
-source.subscribe(value => {
-        console.log('next: ', value);
-    }, err => {
-        console.log('error: ', err);
-    }, () => {
-        console.log('complete');
-    });
+function addStuffToHtml(number) {
+    let span = document.createElement('span');
+    span.innerText = ` ${number}`;
 
+    divMain.appendChild(span);
+}

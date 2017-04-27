@@ -1,13 +1,19 @@
 import {Observable} from 'rxjs';
 
+let numbers = [1, 2, 3, 4];
+
 let source = Observable
-    .interval(1000)
-    .take(6)
-    .publish()
-    .refCount();
+    .from(numbers)
+    .map(n => n * 2)
+    .filter(n => n > 5)
+    .reduce((accumulator, currentValue) => accumulator + currentValue);
 
-source.subscribe(x => console.log('sub 1: ', x));
 
-setTimeout(function () {
-    source.subscribe(x => console.log('                sub 2: ', x));
-}, 2700);
+source.subscribe(value => {
+        console.log('next: ', value);
+    }, err => {
+        console.log('error: ', err);
+    }, () => {
+        console.log('complete');
+    });
+

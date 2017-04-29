@@ -1,19 +1,16 @@
 import {Observable} from 'rxjs';
 
-let btnFun = document.getElementById('btnFun');
-let divMain = document.getElementById('divMain');
+let checkbox = document.getElementById('gates');
+let checked = Observable
+    .fromEvent(checkbox, 'change')
+    .map((e: any) => e.target.checked);
 
-let clicksSource = Observable.fromEvent(btnFun, 'click');
+let div = document.getElementById('output');
 
-clicksSource
-    .scan((s) => <number>s + 1, 0)
-    .buffer(clicksSource.throttleTime(500))
-    .forEach(number => addStuffToHtml(number));
+let source = Observable
+    .interval(100) // interval starts from 0
+    .scan((acc, val) => acc + val);
 
-
-function addStuffToHtml(number) {
-    let span = document.createElement('span');
-    span.innerText = ` ${number}`;
-
-    divMain.appendChild(span);
-}
+checked.filter(c => c === true)
+    .flatMap(() => source.takeUntil(checked))
+    .subscribe(value =>  div.innerText += ` ${value}`);

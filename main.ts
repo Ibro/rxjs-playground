@@ -1,16 +1,10 @@
 import {Observable} from 'rxjs';
 
-let checkbox = document.getElementById('gates');
-let checked = Observable
-    .fromEvent(checkbox, 'change')
-    .map((e: any) => e.target.checked);
-
-let div = document.getElementById('output');
-
 let source = Observable
     .interval(100) // interval starts from 0
-    .scan((acc, val) => acc + val);
+    .take(5) // take first 5
+    .flatMap(n => [n * 1, n * 2, n * 3]);
 
-checked.filter(c => c === true)
-    .flatMap(() => source.takeUntil(checked))
-    .subscribe(value =>  div.innerText += ` ${value}`);
+source.subscribe((value) => {
+    console.log('in next. Value: ', value);
+});
